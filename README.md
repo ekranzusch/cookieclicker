@@ -51,18 +51,7 @@ The goal is to build a run that remains productive even when attention drifts.
 
 # Autoclicker
 
-Core automation loop:
-
-```bash
-#!/usr/bin/env bash
-
-# install:
-brew install cliclick
-
-while true; do
-  cliclick -w 20 c:.
-done
-```
+The click automation script lives at [`scripts/fastclick.sh`](scripts/fastclick.sh).
 
 This keeps constant click pressure on the big cookie with minimal system overhead.
 

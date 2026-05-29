@@ -1,42 +1,47 @@
 #!/bin/bash
 #
-# Autoclicker for the big cookie (macOS).
+# Autoclicker for the big cookie (macOS), OS-level via cliclick.
 #   brew install cliclick
 #   Grant Accessibility permission: System Settings -> Privacy & Security
 #   -> Accessibility (enable your terminal app), or clicks will silently fail.
 #
 # Clicks wherever the cursor currently sits (c:.), so park the pointer over
-# the big cookie before starting. Stop with Ctrl-C.
+# the big cookie before starting. Stop with Ctrl-C (kills all workers).
 #
-# Why not click as fast as the hardware allows?
-#   Cookie Clicker is single-threaded and its logic loop runs at ~30 FPS.
-#   Clicking shares that thread with the loop that produces your PASSIVE
-#   cookies -- which are ~all of your income in this build. Past a few
-#   hundred clicks/sec you start starving that loop, so "faster" can mean
-#   FEWER cookies while burning CPU 24/7. A modest rate is optimal here.
+# NOTE: prefer scripts/console-autoclicker.js. Clicking is a major income
+# source in this build (each click is worth a large share of your CpS), and
+# the console clicker can reach hundreds-to-thousands of CPS. cliclick cannot:
+# its -w wait has a hard 20ms floor applied per command, so ONE cliclick
+# process tops out around ~50 CPS no matter how you batch it.
 #
-# This script sends clicks in batches to avoid relaunching cliclick on every
-# click (the old version spawned a new process per click -- expensive and
-# jittery). cliclick's -w is the wait after each event and has a 20ms floor,
-# so a click (down+up) lands in roughly the 25-50 CPS range -- plenty.
+# To push past that ceiling, this script can run several cliclick loops in
+# parallel. macOS serializes synthetic input events, so throughput scales with
+# diminishing returns -- more processes help, but not linearly.
 #
 # Tuning:
-#   BATCH      clicks per cliclick launch (higher = fewer process spawns)
-#   REST_SECS  pause between batches; raise it to lower the average click rate
-# To go intentionally faster than cliclick's floor, use the in-browser
-# console autoclicker instead (see scripts/console-autoclicker.js).
+#   PROCS   number of parallel cliclick loops (each ~50 CPS; raise for more)
+#   BATCH   clicks per cliclick launch (amortizes process-spawn cost)
 
-BATCH=20
-REST_SECS=0
+PROCS=4
+BATCH=50
 
 # Build the repeated "c:." argument list once: "c:. c:. c:. ...".
 CLICKS=$(printf 'c:. %.0s' $(seq "$BATCH"))
 
-echo "Autoclicking the cursor position (~25-50 CPS, batches of ${BATCH}). Ctrl-C to stop."
+pids=()
+cleanup() {
+  for pid in "${pids[@]}"; do
+    kill "$pid" 2>/dev/null
+  done
+  exit 0
+}
+trap cleanup INT TERM
 
-while true; do
-  cliclick -w 20 $CLICKS
-  if [ "$REST_SECS" != "0" ]; then
-    sleep "$REST_SECS"
-  fi
+echo "Autoclicking cursor position with ${PROCS} parallel workers (~50 CPS each). Ctrl-C to stop."
+
+for ((p = 0; p < PROCS; p++)); do
+  ( while true; do cliclick -w 20 $CLICKS; done ) &
+  pids+=("$!")
 done
+
+wait

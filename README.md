@@ -79,6 +79,14 @@ Because the useful ceiling is ~60 CPS, `cliclick`'s ~50 CPS limit (a hard 20 ms 
 
 Background-tab note: browsers throttle timers in unfocused tabs to about once per second, and the game's own passive loop throttles in background tabs as well. Keep Cookie Clicker in the foreground, or use the Steam desktop version, which does not background-throttle.
 
+### Keeping the machine awake (and why the screen stays on)
+
+[`scripts/keepawake.sh`](scripts/keepawake.sh) runs `caffeinate -dimsu` to keep the system from sleeping during unattended runs. The `-d` flag (keep the **display** on) is load-bearing, not optional: letting the display sleep counts as the same kind of throttling described above. When the screen sleeps, macOS typically locks it, Chrome marks the tab `hidden`, and the autoclicker's timer drops to ~1 click/sec.
+
+Measured directly: with the display allowed to sleep for ~90 sec, earnings fell to **~1.5e24/sec**, versus **~5.7e24/sec** with the screen on (and ~4.3e23 passive-only) — about a **75% loss**. So `-d` stays.
+
+To save power without paying that penalty: **turn the brightness all the way down instead of sleeping the display.** The backlight is the bulk of the draw, so a near-black screen saves most of the energy while keeping the tab visible and full-speed.
+
 ---
 
 # Run Rules

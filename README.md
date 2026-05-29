@@ -255,6 +255,124 @@ Normal reincarnation is the default.
 
 ---
 
+# Advanced Notes From Actual Play
+
+The recommendations above were refined through extended play after the first ascension. Several systems proved more valuable in practice than theory alone suggested.
+
+## Ambient Automation vs. Idle Play
+
+This strategy is often mistaken for an idle build.
+
+It is not.
+
+The build is designed around:
+
+- continuous autoclicking
+- long sessions
+- passive accumulation
+- occasional interaction
+- frequent golden cookie clicks
+
+The game is allowed to run unattended for long periods, but the player still interacts with key systems when convenient.
+
+This is best described as **ambient automation** rather than traditional idle play.
+
+---
+
+## Wrinkler Philosophy
+
+Wrinklers are treated as a savings account rather than a nuisance.
+
+General guidance:
+
+- allow wrinklers to accumulate naturally
+- avoid popping them constantly
+- harvest them when funding major purchases
+- use them to smooth recovery from Krumblor sacrifices
+
+For this playstyle:
+
+- One Mind is desirable
+- early Grandmapocalypse is desirable
+- Elder Covenant is generally not recommended
+
+Wrinklers are a core component of the economy.
+
+---
+
+## Pantheon Configuration
+
+The following Pantheon configuration has performed well in long-term testing:
+
+| Slot | Spirit |
+|--------|--------|
+| Diamond | Muridal |
+| Ruby | Skruuia |
+| Jade | Jeremy |
+
+### Muridal
+
+Muridal performs exceptionally well because the autoclicker maintains constant click throughput.
+
+### Skruuia
+
+Skruuia complements the wrinkler-based economy and rewards long unattended sessions.
+
+### Jeremy
+
+Jeremy provides reliable passive production with no maintenance requirements.
+
+This combination avoids penalties to golden cookie interaction while reinforcing the strengths of the build.
+
+---
+
+## Krumblor Strategy
+
+Dragon upgrades should be pursued aggressively once the sacrificed building is no longer a dominant portion of total production.
+
+When the economy becomes diversified:
+
+- sacrifices become easier to recover from
+- wrinklers can fund recovery
+- stored cookies can bridge temporary production losses
+
+Do not be afraid to take dragon upgrades simply because the sacrifice appears large on paper.
+
+---
+
+## Stock Market
+
+The Stock Market is a supporting system rather than a primary progression mechanic.
+
+General philosophy:
+
+- buy when prices are unusually low
+- sell when prices are unusually high
+- avoid excessive micromanagement
+
+The bakery remains the primary source of progression.
+
+The Stock Market exists to support the bakery, not the other way around.
+
+---
+
+## Upgrade Evaluation
+
+As higher-tier buildings become dominant, building share percentages can become misleading.
+
+A building contributing a smaller percentage of total CpS may still have highly valuable upgrades.
+
+Evaluate purchases using:
+
+- total CpS gained
+- purchase cost
+- recovery time
+- opportunity cost
+
+Do not evaluate upgrades solely on the current percentage contribution shown in building tooltips.
+
+---
+
 # Summary
 
 This build is designed to make Cookie Clicker:

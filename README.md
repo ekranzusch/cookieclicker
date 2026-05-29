@@ -55,31 +55,27 @@ The goal is to build a run that remains productive even when attention drifts.
 
 Three options are provided:
 
-- [`scripts/cookie-autoclicker.user.js`](scripts/cookie-autoclicker.user.js) — **recommended.** A [Tampermonkey](https://www.tampermonkey.net/) userscript that runs the same direct `Game.ClickCookie()` loop, but auto-starts on page load, persists across reloads, and is scoped to only the Cookie Clicker site. It is the transparent, safe alternative to a black-box autoclicker extension: you can read exactly what it does. Start/stop from the Tampermonkey menu.
+- [`scripts/cookie-autoclicker.user.js`](scripts/cookie-autoclicker.user.js) — **recommended.** A [Tampermonkey](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) userscript that runs the same direct `Game.ClickCookie()` loop, but auto-starts on page load, persists across reloads, and is scoped to only the Cookie Clicker site. It is the transparent, safe alternative to a black-box autoclicker extension: you can read exactly what it does. Start/stop from the Tampermonkey menu. Note: Chrome 138+ requires enabling the **"Allow User Scripts"** toggle (Tampermonkey icon → Manage Extension), or Developer Mode on older Chrome — see [Tampermonkey FAQ Q209](https://www.tampermonkey.net/faq.php?q=Q209#Q209).
 - [`scripts/console-autoclicker.js`](scripts/console-autoclicker.js) — the same loop as a one-off console paste (no install). Handy for a quick test; you re-paste it after each reload.
-- [`scripts/fastclick.sh`](scripts/fastclick.sh) — OS-level clicker for macOS (`cliclick`). It clicks wherever the cursor sits, so it keeps working while the window is visible-but-unfocused. Park the pointer over the big cookie before starting. It is rate-limited (see below), so treat it as the fallback.
+- [`scripts/fastclick.sh`](scripts/fastclick.sh) — OS-level clicker for macOS (`cliclick`). It clicks at the physical cursor position, so the pointer must sit on the big cookie. Tops out near ~50 CPS, which (see below) is essentially the useful ceiling anyway. Treat it as the fallback.
 
 Either keeps constant click pressure on the big cookie.
 
-## Clicking Is a Major Income Source
+## Clicking Matters — But It Caps Around the Frame Rate
 
-This is the part of the build that is easy to underestimate. **Clicking is not a side activity here — it is one of your largest income streams.**
+Clicking is a **large** income boost, not a side activity: in testing the autoclicker raised total earnings to roughly **13× the passive-only rate**. Late-game "mouse" upgrades make each click worth a meaningful share of your CpS, and clicking accounted for a big fraction of all cookies baked over a run. This is also why **Muridal** (+15% click power) earns its Diamond slot.
 
-Why: late-game "mouse" upgrades make each click worth a fixed *percentage of your CpS*. In testing, cookies-per-click sat at roughly **15% of CpS**, and clicking accounted for around **27% of all cookies baked over a run**. Click income scales **linearly** with click rate, so at even ~50 CPS clicking can out-produce passive CpS several times over.
+But there is a hard ceiling that is easy to miss: **the game only credits about one click per frame (~30 FPS).** So your effective click income maxes out at roughly **30–60 CPS**. Requesting 100, 1,000, or 100,000 CPS all earn the *same* — the extra calls are discarded, they just burn CPU and can flood the console with errors.
+
+Measured example (one run): passive only ≈ 4.3e23/sec; at **60 CPS** ≈ 5.7e24/sec; at 1,000 and 100,000 CPS, the same ~5e24/sec. The boost is real and huge; the rate beyond ~60 does nothing.
 
 Consequences:
 
-- **Faster genuinely is better here.** Run the clicker as fast as the game can handle.
-- Click income does **not** appear in the "cookies per second" stat (that stat is passive only). Judge the clicker by how fast your bank fills, not by the CpS number.
-- This is also why **Muridal** (+15% click power) earns its Diamond slot — it is boosting your biggest lever, not a rounding error.
+- **Set the rate to ~60–100 CPS and stop.** That captures the entire click bonus. The scripts default to 100 (a little margin over the cap).
+- Click income does **not** appear in the "cookies per second" stat (that stat is passive only). Judge the clicker by how fast your bank fills, not by the CpS number. To measure your own cap, the JS clickers have a `SHOW_METER` toggle plus this console one-liner: `(() => { const a = Game.cookiesEarned; setTimeout(() => console.log('earned/sec:', ((Game.cookiesEarned - a) / 5).toExponential(3)), 5000); })();`
+- The **truly** huge click payoffs come from **Click Frenzy** golden-cookie buffs (which multiply click value ~777×) during active play — not from raw idle click rate.
 
-### How fast is too fast?
-
-The game is single-threaded and its logic loop runs at ~30 FPS; clicks share that thread with the loop that mints passive cookies. The real limit is **frame rate**, not a fixed CPS number. Push the rate up and only back off if the game visibly stutters or lags. In practice a few hundred to ~1000 CPS is a strong, safe range on modern hardware.
-
-### cliclick's ceiling
-
-`cliclick`'s `-w` wait has a hard **20 ms floor applied per command**, so a single `cliclick` process tops out around **~50 CPS** no matter how you batch it. The only way to push it higher is to run several `cliclick` loops in parallel (`PROCS` in the script), which multiplies the rate with diminishing returns because macOS serializes synthetic input events. For genuinely high rates, use the console clicker instead.
+Because the useful ceiling is ~60 CPS, `cliclick`'s ~50 CPS limit (a hard 20 ms floor per command) is a non-issue — no need to chase higher rates with it.
 
 Background-tab note: browsers throttle timers in unfocused tabs to about once per second, and the game's own passive loop throttles in background tabs as well. Keep Cookie Clicker in the foreground, or use the Steam desktop version, which does not background-throttle.
 

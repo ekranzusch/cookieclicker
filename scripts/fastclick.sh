@@ -6,42 +6,23 @@
 #   -> Accessibility (enable your terminal app), or clicks will silently fail.
 #
 # Clicks wherever the cursor currently sits (c:.), so park the pointer over
-# the big cookie before starting. Stop with Ctrl-C (kills all workers).
+# the big cookie before starting. Stop with Ctrl-C.
 #
-# NOTE: prefer scripts/console-autoclicker.js. Clicking is a major income
-# source in this build (each click is worth a large share of your CpS), and
-# the console clicker can reach hundreds-to-thousands of CPS. cliclick cannot:
-# its -w wait has a hard 20ms floor applied per command, so ONE cliclick
-# process tops out around ~50 CPS no matter how you batch it.
+# A single cliclick process tops out around ~50 CPS (its -w wait has a hard
+# 20ms floor per command). That used to look like a limitation, but testing
+# showed the game only CREDITS about one click per frame (~30 FPS), so click
+# income caps around 30-60 CPS anyway. In other words, ~50 CPS is already
+# essentially optimal -- there is nothing to gain from clicking faster, so this
+# script intentionally stays as one simple loop.
 #
-# To push past that ceiling, this script can run several cliclick loops in
-# parallel. macOS serializes synthetic input events, so throughput scales with
-# diminishing returns -- more processes help, but not linearly.
-#
-# Tuning:
-#   PROCS   number of parallel cliclick loops (each ~50 CPS; raise for more)
-#   BATCH   clicks per cliclick launch (amortizes process-spawn cost)
+# prefer scripts/console-autoclicker.js (or the Tampermonkey userscript): it is
+# cursor-independent, so you can use the mouse normally while it runs.
 
-PROCS=4
-BATCH=50
+# Build a small batch of clicks per cliclick launch to amortize spawn cost.
+CLICKS=$(printf 'c:. %.0s' $(seq 20))
 
-# Build the repeated "c:." argument list once: "c:. c:. c:. ...".
-CLICKS=$(printf 'c:. %.0s' $(seq "$BATCH"))
+echo "Autoclicking cursor position at ~50 CPS (the useful ceiling). Ctrl-C to stop."
 
-pids=()
-cleanup() {
-  for pid in "${pids[@]}"; do
-    kill "$pid" 2>/dev/null
-  done
-  exit 0
-}
-trap cleanup INT TERM
-
-echo "Autoclicking cursor position with ${PROCS} parallel workers (~50 CPS each). Ctrl-C to stop."
-
-for ((p = 0; p < PROCS; p++)); do
-  ( while true; do cliclick -w 20 $CLICKS; done ) &
-  pids+=("$!")
+while true; do
+  cliclick -w 20 $CLICKS
 done
-
-wait

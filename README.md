@@ -330,25 +330,37 @@ Wrinklers are a core component of the economy.
 
 ## Pantheon Configuration
 
-This build prioritizes a **set-and-forget** Pantheon: no spirit that punishes golden cookies, and nothing that needs to be swapped in and out during play.
+This build prioritizes a **set-and-forget** Pantheon with a hard rule: **no spirit may carry a meaningful golden-cookie penalty**, and nothing should need swapping in and out during play. Golden cookies and chill play are valued above squeezing out maximum CpS.
 
 | Slot | Spirit |
 |--------|--------|
 | Diamond | Muridal |
-| Ruby | Cyclius |
+| Ruby | Rigidel |
 | Jade | Jeremy |
 
-### Muridal
+This is a deliberately conservative setup that keeps golden cookies essentially untouched. It is not the highest-CpS Pantheon possible — the strongest passive boosters (Mokalsium, and Jeremy at full strength) reduce golden-cookie frequency enough to be noticeable, so they are kept out of the high-impact slots on purpose.
 
-Muridal performs exceptionally well because the autoclicker maintains constant click throughput. Its only downside is a small reduction to building output, with no effect on golden cookies.
+### Muridal (Diamond)
 
-### Cyclius
+Muridal pairs with the always-on autoclicker: its click-power bonus is effectively active at all times, and it has no golden-cookie penalty. Its only downside is a small reduction to building output (−3% in the Diamond slot). Note that this building penalty *is* reflected in the displayed CpS, while the click-power upside is not (clicking feeds cookies-per-click, not the CpS stat).
 
-Cyclius is a purely passive CpS bonus that oscillates over time (up to +15%). It requires zero interaction, never needs swapping, and has no golden-cookie penalty — an ideal fit for a low-maintenance, always-running build.
+### Rigidel (Ruby)
 
-### Jeremy
+Rigidel is fully penalty-free: it speeds up sugar-lump ripening and does not touch CpS or golden cookies at all. In the Ruby slot the speedup is stronger (≈40 minutes sooner) than in Jade. The one quirk is that the effect is only active when your total building count ends in 0. It is placed in Ruby because none of the spirits that *do* boost CpS are allowed in the high-impact slots under this build's no-penalty rule — so the slot goes to a safe, useful utility instead.
 
-Jeremy provides reliable passive building production with no maintenance. Note its minor trade-off: a small reduction to golden/wrath cookie frequency (−3% in the Jade slot). This is mild, but if you want zero golden-cookie interference, Rigidel (faster sugar-lump ripening, no cookie penalty) is a penalty-free alternative for the Jade slot.
+### Jeremy (Jade)
+
+Jeremy is the one real passive CpS gain in this lineup: **+3% building output** in the Jade slot, at the cost of a **small −3%** golden-cookie frequency. In the Jade slot the penalty is mild and generally not noticeable, which is why it is kept here and nowhere stronger.
+
+Keep any golden-cookie penalty confined to the **Jade** slot, where it is smallest. Do **not** move Jeremy up to Ruby or Diamond — at −6% / −10% the reduction becomes noticeable, which is exactly what this build avoids. Mokalsium (−15% / −10% / −5%) is excluded entirely for the same reason.
+
+### A note on Cyclius
+
+Cyclius is **not** used in this build. It has no golden-cookie penalty, but its CpS bonus is a sine wave swinging between **+15% and −15%** tied to the UTC time of day (a 3 / 12 / 24-hour cycle for Diamond / Ruby / Jade). Over a full cycle it averages **0%** — it does not raise average CpS, it only makes the displayed number rise and fall. Worth knowing because that oscillation is the usual explanation for a sudden, unexplained CpS drop if you ever slot it. Live phase tracker: https://flothewiz.github.io/cyclius/.
+
+### A note on Holobore
+
+Holobore offers a tempting flat +15 / +10 / +5% base CpS with no time component — but its downside is disqualifying for this build: **clicking a single golden cookie unslots it and uses up all your worship swaps.** For a player who clicks golden cookies on sight, it would constantly self-eject. Excluded.
 
 ### A note on Skruuia
 

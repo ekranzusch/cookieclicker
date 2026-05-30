@@ -57,7 +57,7 @@
       // pop() mutates Game.shimmers, so iterate over a copy.
       if (AUTO_GOLDEN && Array.isArray(Game.shimmers) && Game.shimmers.length) {
         Game.shimmers.slice().forEach((s) => {
-          if (s.type === 'wrath') return;
+          if (s.wrath) return; // wrath cookies are type "golden" with .wrath === 1
           try { s.pop(); } catch (e) {}
         });
       }

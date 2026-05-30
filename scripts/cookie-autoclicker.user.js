@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cookie Clicker Autoclicker
 // @namespace    cookieclicker-ambient-automation
-// @version      1.1.1
+// @version      1.1.2
 // @description  Auto-clicks the big cookie via Game.ClickCookie(), and (optionally) pops golden cookies and harvests ripe sugar lumps. Transparent, site-scoped alternative to a black-box autoclicker extension.
 // @author       you
 // @match        https://orteil.dashnet.org/cookieclicker/*
@@ -63,12 +63,13 @@
     return typeof Game !== 'undefined' && Game.ready && typeof Game.ClickCookie === 'function';
   }
 
-  // Pop golden cookies and reindeer only; skip wrath cookies (Ruin, Clot, etc.).
+  // Pop golden cookies and reindeer only. Wrath cookies are still type "golden"
+  // but flagged with shimmer.wrath === 1 (red cookie during Grandmapocalypse).
   // pop() mutates Game.shimmers, so iterate over a copy.
   function popGolden() {
     if (!Array.isArray(Game.shimmers) || !Game.shimmers.length) return;
     Game.shimmers.slice().forEach((s) => {
-      if (s.type === 'wrath') return;
+      if (s.wrath) return;
       try { s.pop(); } catch (e) { /* ignore a shimmer that vanished mid-loop */ }
     });
   }

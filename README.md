@@ -83,7 +83,7 @@ Background-tab note: browsers throttle timers in unfocused tabs to about once pe
 
 An OS-level clicker like `cliclick` clicks a fixed *screen position*, so it only ever caught golden cookies or sugar lumps by accident — when one happened to spawn under the cursor. The userscript (and console script) target them deliberately instead, via two toggles that default on:
 
-- **`AUTO_GOLDEN`** — pops golden cookies and reindeer the instant they appear. **Wrath cookies are skipped** — during Grandmapocalypse they can trigger Ruin, Clot, and other downsides, and this build never wants those clicked unattended. When a normal golden cookie pops a **Click Frenzy**, the always-on clicker cashes the buff in automatically.
+- **`AUTO_GOLDEN`** — pops golden cookies and reindeer the instant they appear. **Wrath cookies are skipped** (`shimmer.wrath === 1` — they still use type `"golden"` in the game code, so the red cookies during Grandmapocalypse are filtered by the flag, not the type string). They can trigger Ruin, Clot, and other downsides, and this build never wants those clicked unattended. When a normal golden cookie pops a **Click Frenzy**, the always-on clicker cashes the buff in automatically.
 - **`AUTO_LUMP`** — harvests a sugar lump as soon as it is **ripe** (~23 hours), so none are ever missed over a long run. It deliberately never touches an unripe lump (calling the harvest early would pop a confirmation dialog), making it safe to leave running unattended.
 
 Both run on a cheap once-per-second check that starts and stops with the clicker. Flip either constant to `false` to disable it. This is one more reason the userscript is the primary tool and `fastclick.sh` is only a fallback — the shell clicker can't do any of this.

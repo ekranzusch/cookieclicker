@@ -55,9 +55,9 @@ The goal is to build a run that remains productive even when attention drifts.
 
 Three options are provided:
 
-- [`scripts/cookie-autoclicker.user.js`](scripts/cookie-autoclicker.user.js) — **recommended.** A [Tampermonkey](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) userscript that runs the same direct `Game.ClickCookie()` loop, but auto-starts on page load, persists across reloads, and is scoped to only the Cookie Clicker site. It is the transparent, safe alternative to a black-box autoclicker extension: you can read exactly what it does. Start/stop from the Tampermonkey menu. Note: Chrome 138+ requires enabling the **"Allow User Scripts"** toggle (Tampermonkey icon → Manage Extension), or Developer Mode on older Chrome — see [Tampermonkey FAQ Q209](https://www.tampermonkey.net/faq.php?q=Q209#Q209).
-- [`scripts/console-autoclicker.js`](scripts/console-autoclicker.js) — the same loop as a one-off console paste (no install). Handy for a quick test; you re-paste it after each reload.
-- [`scripts/fastclick.sh`](scripts/fastclick.sh) — OS-level clicker for macOS (`cliclick`). It clicks at the physical cursor position, so the pointer must sit on the big cookie. Tops out near ~50 CPS, which (see below) is essentially the useful ceiling anyway. Treat it as the fallback.
+- [`scripts/cookie-autoclicker.user.js`](scripts/cookie-autoclicker.user.js) — **recommended.** A [Tampermonkey](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) userscript that runs the same direct `Game.ClickCookie()` loop, but auto-starts on page load, persists across reloads, and is scoped to only the Cookie Clicker site. It also pops golden cookies and harvests ripe sugar lumps (see below). It is the transparent, safe alternative to a black-box autoclicker extension: you can read exactly what it does. Start/stop from the Tampermonkey menu. Note: Chrome 138+ requires enabling the **"Allow User Scripts"** toggle (Tampermonkey icon → Manage Extension), or Developer Mode on older Chrome — see [Tampermonkey FAQ Q209](https://www.tampermonkey.net/faq.php?q=Q209#Q209).
+- [`scripts/console-autoclicker.js`](scripts/console-autoclicker.js) — the same loop (plus the golden/lump helpers) as a one-off console paste (no install). Handy for a quick test; you re-paste it after each reload.
+- [`scripts/fastclick.sh`](scripts/fastclick.sh) — OS-level clicker for macOS (`cliclick`). It clicks at the physical cursor position, so the pointer must sit on the big cookie. Tops out near ~50 CPS, which (see below) is essentially the useful ceiling anyway. It cannot pop golden cookies or sugar lumps on purpose — it has no idea where they are, and only ever caught them by luck when they drifted under the cursor. Treat it as the fallback.
 
 Either keeps constant click pressure on the big cookie.
 
@@ -78,6 +78,15 @@ Consequences:
 Because the useful ceiling is ~60 CPS, `cliclick`'s ~50 CPS limit (a hard 20 ms floor per command) is a non-issue — no need to chase higher rates with it.
 
 Background-tab note: browsers throttle timers in unfocused tabs to about once per second, and the game's own passive loop throttles in background tabs as well. Keep Cookie Clicker in the foreground, or use the Steam desktop version, which does not background-throttle.
+
+## Golden Cookies and Sugar Lumps
+
+An OS-level clicker like `cliclick` clicks a fixed *screen position*, so it only ever caught golden cookies or sugar lumps by accident — when one happened to spawn under the cursor. The userscript (and console script) target them deliberately instead, via two toggles that default on:
+
+- **`AUTO_GOLDEN`** — pops every golden cookie, wrath cookie, and reindeer the instant it appears. This pairs especially well with the always-on clicker: when it pops a **Click Frenzy**, your existing click stream cashes the buff in automatically, with no manual mashing required.
+- **`AUTO_LUMP`** — harvests a sugar lump as soon as it is **ripe** (~23 hours), so none are ever missed over a long run. It deliberately never touches an unripe lump (calling the harvest early would pop a confirmation dialog), making it safe to leave running unattended.
+
+Both run on a cheap once-per-second check that starts and stops with the clicker. Flip either constant to `false` to disable it. This is one more reason the userscript is the primary tool and `fastclick.sh` is only a fallback — the shell clicker can't do any of this.
 
 ### Keeping the machine awake (and why the screen stays on)
 

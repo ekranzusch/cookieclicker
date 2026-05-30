@@ -20,8 +20,8 @@
 //   Frenzy during active play. Set SHOW_METER = true to re-measure the cap.
 //
 // GOLDEN COOKIES & SUGAR LUMPS
-//   AUTO_GOLDEN pops every golden cookie / reindeer the instant it appears (a
-//   popped Click Frenzy gets fully cashed in by the always-on clicker). AUTO_LUMP
+//   AUTO_GOLDEN pops golden cookies and reindeer (not wrath cookies — Ruin etc.).
+//   A popped Click Frenzy gets fully cashed in by the always-on clicker. AUTO_LUMP
 //   harvests a sugar lump once it is ripe (~23h), never early. Both run on a
 //   cheap 1s check. Set either to false to disable.
 //
@@ -56,7 +56,10 @@
     window.autoClickerShimmer = setInterval(() => {
       // pop() mutates Game.shimmers, so iterate over a copy.
       if (AUTO_GOLDEN && Array.isArray(Game.shimmers) && Game.shimmers.length) {
-        Game.shimmers.slice().forEach((s) => { try { s.pop(); } catch (e) {} });
+        Game.shimmers.slice().forEach((s) => {
+          if (s.type === 'wrath') return;
+          try { s.pop(); } catch (e) {}
+        });
       }
       // Only harvest a ripe lump -- clickLump() on an unripe lump pops a dialog.
       if (AUTO_LUMP && typeof Game.clickLump === 'function' && typeof Game.lumpT === 'number') {

@@ -297,9 +297,141 @@ Normal reincarnation is the default.
 
 ---
 
+# Minigames
+
+Minigames are **support systems** for the bakery, not parallel progression tracks. This build treats them as set-and-forget where possible: check in occasionally, avoid constant swapping, and do not let side mechanics compete with upgrades and buildings.
+
+The autoclicker harvests **ripe sugar lumps** automatically (~23 hours); Rigidel in the Pantheon speeds ripening further when your building count ends in 0.
+
+---
+
+## Sugar Lumps
+
+Lumps are slow (~one per day before bonuses). Spend them deliberately; do not spread them across every building just because you can.
+
+**Priority for this build**
+
+1. **Temple (level 1, then occasional levels)** — unlocks the Pantheon, which is core to this setup (Muridal / Rigidel / Jeremy). Higher Temple levels strengthen spirit effects slightly.
+2. **Farm (level 1, then levels when you care about the garden)** — unlocks the Garden; each level expands the plot and strengthens plant effects. Level 9 is a full 9×9 grid.
+3. **Bank (level 1 when ready)** — unlocks the Stock Market for passive buy-low / sell-high check-ins.
+4. **Wizard Tower (level 1, low priority)** — unlocks the Grimoire. Useful for active play; mostly optional for unattended runs (see Grimoire below).
+5. **Other minigame buildings** (Shipment, Alchemy lab, etc.) — only when you actually use that minigame; not a priority for the ambient bakery loop.
+
+**General rules**
+
+- **Never harvest lumps early** — you lose a lump and reset the timer. The userscript only harvests once ripe.
+- **Level 1 unlocks the minigame** — that is usually the best first lump on a building.
+- **Higher levels are incremental** — nice, not urgent. Favor Temple and Farm over scattering +1 on everything.
+- Lumps are **not** a substitute for heavenly chips or normal upgrades; they are long-horizon seasoning.
+
+---
+
+## Garden (Farm)
+
+At early garden stages (only **Baker's Wheat** and **Meddleweed** unlocked), the garden barely moves total CpS. Treat it as a slow seed-unlock side project, not a main income source.
+
+### Set-and-forget layout (recommended default)
+
+- Fill the plot with **Baker's Wheat** (full grid).
+- Keep **Fertilizer** soil selected — plants mature faster; fine when you are replanting often and not keeping rare mature plants alive.
+- When you remember (every day or two), **Harvest all**, replant wheat.
+- Use **Freeze** if you will be away for days and do not want plants dying mid-cycle.
+
+Each mature Baker's Wheat gives a small CpS boost; the real long-term payoff is unlocking more seeds for better plants later (Queenbeet, etc.).
+
+### Unlocking new seeds (active session only)
+
+**Meddleweed spreads** and can **kill neighboring plants** — do not fill the farm with it unattended.
+
+When you want mutations:
+
+- Keep several **Baker's Wheat** plots.
+- Plant **meddleweed on an edge or corner**, not across the whole grid.
+- Let it spread a bit; mutations often appear when weeds die next to wheat (e.g. toward **Thumbcorn** and beyond).
+- **Pebbles** soil helps seed drops while hunting unlocks; **Fertilizer** speeds up mutation cycles.
+
+When you are not chasing seeds, skip meddleweed entirely.
+
+### Soil quick reference
+
+| Soil | Use when |
+|------|----------|
+| **Fertilizer** | Default for wheat grids and faster unlock attempts |
+| **Clay** | Later, when valuable **mature** plants should stay alive a long time |
+| **Pebbles** | Actively farming for **new seed** unlocks |
+| **Dirt** | Neutral default if unsure |
+
+---
+
+## Pantheon (Temple)
+
+This build prioritizes a **set-and-forget** Pantheon with a hard rule: **no spirit may carry a meaningful golden-cookie penalty**, and nothing should need swapping in and out during play. Golden cookies and chill play are valued above squeezing out maximum CpS.
+
+| Slot | Spirit |
+|--------|--------|
+| Diamond | Muridal |
+| Ruby | Rigidel |
+| Jade | Jeremy |
+
+This is a deliberately conservative setup that keeps golden cookies essentially untouched. It is not the highest-CpS Pantheon possible — the strongest passive boosters (Mokalsium, and Jeremy at full strength) reduce golden-cookie frequency enough to be noticeable, so they are kept out of the high-impact slots on purpose.
+
+### Muridal (Diamond)
+
+Muridal pairs with the always-on autoclicker: its click-power bonus is effectively active at all times, and it has no golden-cookie penalty. Its only downside is a small reduction to building output (−3% in the Diamond slot). Note that this building penalty *is* reflected in the displayed CpS, while the click-power upside is not (clicking feeds cookies-per-click, not the CpS stat).
+
+### Rigidel (Ruby)
+
+Rigidel is fully penalty-free: it speeds up sugar-lump ripening and does not touch CpS or golden cookies at all. In the Ruby slot the speedup is stronger (≈40 minutes sooner) than in Jade. The one quirk is that the effect is only active when your total building count ends in 0. It is placed in Ruby because none of the spirits that *do* boost CpS are allowed in the high-impact slots under this build's no-penalty rule — so the slot goes to a safe, useful utility instead.
+
+### Jeremy (Jade)
+
+Jeremy is the one real passive CpS gain in this lineup: **+3% building output** in the Jade slot, at the cost of a **small −3%** golden-cookie frequency. In the Jade slot the penalty is mild and generally not noticeable, which is why it is kept here and nowhere stronger.
+
+Keep any golden-cookie penalty confined to the **Jade** slot, where it is smallest. Do **not** move Jeremy up to Ruby or Diamond — at −6% / −10% the reduction becomes noticeable, which is exactly what this build avoids. Mokalsium (−15% / −10% / −5%) is excluded entirely for the same reason.
+
+### A note on Cyclius
+
+Cyclius is **not** used in this build. It has no golden-cookie penalty, but its CpS bonus is a sine wave swinging between **+15% and −15%** tied to the UTC time of day (a 3 / 12 / 24-hour cycle for Diamond / Ruby / Jade). Over a full cycle it averages **0%** — it does not raise average CpS, it only makes the displayed number rise and fall. Worth knowing because that oscillation is the usual explanation for a sudden, unexplained CpS drop if you ever slot it. Live phase tracker: https://flothewiz.github.io/cyclius/.
+
+### A note on Holobore
+
+Holobore offers a tempting flat +15 / +10 / +5% base CpS with no time component — but its downside is disqualifying for this build: **clicking a single golden cookie unslots it and uses up all your worship swaps.** For a player who clicks golden cookies on sight, it would constantly self-eject. Excluded.
+
+### A note on Skruuia
+
+Skruuia is deliberately **not** used here. Its downside turns all golden cookies into wrath cookies with a higher chance of negative effects. The standard workaround is to slot it in for only a few seconds before popping wrinklers — but that constant swapping runs counter to this build's set-and-forget philosophy, so it is left out entirely.
+
+---
+
+## Grimoire (Wizard Tower)
+
+The Grimoire is for **active** bursts, not the unattended loop.
+
+- **Do not** leave **Force the Hand of Fate** or other click-dependent spells running unattended — backfires can spawn wrath cookies (same risks as Grandmapocalypse wrath cookies; the autoclicker deliberately skips those).
+- Passive spells that boost production without interaction are fine when you are checking in, but they are not worth heavy lump investment in the Wizard Tower compared to Temple or Farm.
+- Spend a lump on **Wizard Tower level 1** only when you actually want to experiment with spells; otherwise it can wait.
+
+---
+
+## Stock Market (Bank)
+
+The Stock Market is a supporting system rather than a primary progression mechanic.
+
+General philosophy:
+
+- buy when prices are unusually low
+- sell when prices are unusually high
+- avoid excessive micromanagement
+
+The bakery remains the primary source of progression.
+
+The Stock Market exists to support the bakery, not the other way around.
+
+---
+
 # Advanced Notes From Actual Play
 
-The recommendations above were refined through extended play after the first ascension. Several systems proved more valuable in practice than theory alone suggested.
+The recommendations above were refined through extended play after the first ascension. Several systems proved more valuable in practice than theory alone suggested. Minigame specifics (Garden, Pantheon, Grimoire, Stock Market, sugar lumps) live in **Minigames** above.
 
 ## Ambient Automation vs. Idle Play
 
@@ -342,46 +474,6 @@ Wrinklers are a core component of the economy.
 
 ---
 
-## Pantheon Configuration
-
-This build prioritizes a **set-and-forget** Pantheon with a hard rule: **no spirit may carry a meaningful golden-cookie penalty**, and nothing should need swapping in and out during play. Golden cookies and chill play are valued above squeezing out maximum CpS.
-
-| Slot | Spirit |
-|--------|--------|
-| Diamond | Muridal |
-| Ruby | Rigidel |
-| Jade | Jeremy |
-
-This is a deliberately conservative setup that keeps golden cookies essentially untouched. It is not the highest-CpS Pantheon possible — the strongest passive boosters (Mokalsium, and Jeremy at full strength) reduce golden-cookie frequency enough to be noticeable, so they are kept out of the high-impact slots on purpose.
-
-### Muridal (Diamond)
-
-Muridal pairs with the always-on autoclicker: its click-power bonus is effectively active at all times, and it has no golden-cookie penalty. Its only downside is a small reduction to building output (−3% in the Diamond slot). Note that this building penalty *is* reflected in the displayed CpS, while the click-power upside is not (clicking feeds cookies-per-click, not the CpS stat).
-
-### Rigidel (Ruby)
-
-Rigidel is fully penalty-free: it speeds up sugar-lump ripening and does not touch CpS or golden cookies at all. In the Ruby slot the speedup is stronger (≈40 minutes sooner) than in Jade. The one quirk is that the effect is only active when your total building count ends in 0. It is placed in Ruby because none of the spirits that *do* boost CpS are allowed in the high-impact slots under this build's no-penalty rule — so the slot goes to a safe, useful utility instead.
-
-### Jeremy (Jade)
-
-Jeremy is the one real passive CpS gain in this lineup: **+3% building output** in the Jade slot, at the cost of a **small −3%** golden-cookie frequency. In the Jade slot the penalty is mild and generally not noticeable, which is why it is kept here and nowhere stronger.
-
-Keep any golden-cookie penalty confined to the **Jade** slot, where it is smallest. Do **not** move Jeremy up to Ruby or Diamond — at −6% / −10% the reduction becomes noticeable, which is exactly what this build avoids. Mokalsium (−15% / −10% / −5%) is excluded entirely for the same reason.
-
-### A note on Cyclius
-
-Cyclius is **not** used in this build. It has no golden-cookie penalty, but its CpS bonus is a sine wave swinging between **+15% and −15%** tied to the UTC time of day (a 3 / 12 / 24-hour cycle for Diamond / Ruby / Jade). Over a full cycle it averages **0%** — it does not raise average CpS, it only makes the displayed number rise and fall. Worth knowing because that oscillation is the usual explanation for a sudden, unexplained CpS drop if you ever slot it. Live phase tracker: https://flothewiz.github.io/cyclius/.
-
-### A note on Holobore
-
-Holobore offers a tempting flat +15 / +10 / +5% base CpS with no time component — but its downside is disqualifying for this build: **clicking a single golden cookie unslots it and uses up all your worship swaps.** For a player who clicks golden cookies on sight, it would constantly self-eject. Excluded.
-
-### A note on Skruuia
-
-Skruuia is deliberately **not** used here. Its downside turns all golden cookies into wrath cookies with a higher chance of negative effects. The standard workaround is to slot it in for only a few seconds before popping wrinklers — but that constant swapping runs counter to this build's set-and-forget philosophy, so it is left out entirely.
-
----
-
 ## Milk Strategy
 
 Milk selection is a minor optimization and not worth constant switching:
@@ -405,22 +497,6 @@ When the economy becomes diversified:
 - stored cookies can bridge temporary production losses
 
 Do not be afraid to take dragon upgrades simply because the sacrifice appears large on paper.
-
----
-
-## Stock Market
-
-The Stock Market is a supporting system rather than a primary progression mechanic.
-
-General philosophy:
-
-- buy when prices are unusually low
-- sell when prices are unusually high
-- avoid excessive micromanagement
-
-The bakery remains the primary source of progression.
-
-The Stock Market exists to support the bakery, not the other way around.
 
 ---
 
